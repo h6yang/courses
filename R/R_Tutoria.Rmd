@@ -1,0 +1,563 @@
+---
+title: "R Tutorial"
+author: |
+  | Hai Yang
+date: "October 25, 2016"
+output:
+  beamer_presentation:
+    fig_height: 3.5
+    fig_width: 5
+    keep_tex: no
+    toc: yes
+---
+## R  
+
+R is 'GNU S', a freely available language and environment for statistical computing and graphics which provides a wide variety of statistical and graphical techniques
+
+- linear and nonlinear modeling
+- statistial tests
+- time series analysis
+- classification
+- clustering
+- genomics
+
+
+Download and install R (precompiled binary distribution) from the nearest R mirror site, <https://cran.stat.ucla.edu>
+
+## Look and feel of R 
+
+```{r}
+1+2
+2*2
+2*2*2*2
+2^4
+```
+
+## More calculations in R
+
+```{r}
+log(16, 2)
+pi
+pi*(3^2)
+sin(pi/2)
+```
+
+
+## Simple plot in R
+
+```{r}
+x = c(-10:10)
+y = x^3
+plot(x, y)
+```
+
+
+## Make the figure fancier by adding more plotting parameters
+
+```{r}
+x = c(-10:10)
+y = x^3
+plot(x, y, pch=1, lty=1, type="b", col="blue")
+```
+
+
+## Try changing parameter values 
+
+```{r}
+x = c(-5:10)
+y = x^3
+plot(x, y, pch=15, lty=2, type="b", col="orange")
+```
+
+
+
+
+## R Studio 
+
+RStudio is a set of integrated tools designed to help you be more prudictive with R. It includes 
+
+- console
+- syntax-highlighting editor that supports direct code execution
+- plotting
+- history
+- debugging 
+- workspace management. 
+
+Download and install RStudio from <https://www.rstudio.com/products/rstudio/download>
+
+
+## R Studio text editor
+R Studio -> File -> New File -> R Script to create an R code file, type commands below in the text file, click the first line, and click Run button three times.
+
+```{r, eval=FALSE}
+x = c(-10:10)
+y = x^3
+plot(x, y, pch=1, lty=1, type="b", col="blue")
+```
+
+
+## R Packages
+
+R packages are collections of functions, data, and complied code in a ready-to-use format with enriched documentation. 
+
+Use R Studio to install R packages 
+R Studio -> Tools -> Install Packages... -> type in package name like "ggplot2"
+
+- package name 1 "xlsx"
+- package name 2 "foreign"
+- package name 3 "ggplot2"
+
+
+## R Objects
+
+R basic command
+
+- Data input
+- Data Management
+- Basice Statistics
+- Basic Graphs
+
+
+## Data input
+
+Data input:
+
+- Importing Data  
+- Data export  
+- Viewing Data  
+- Missing Data  
+
+
+## Importing Data
+
+```{r}
+## Keyboard input  
+# create a data frame from scratch   
+age <- c(25, 30, 56)   
+gender <- c("male", "female", "male")  
+weight <- c(160, 110, 220)   
+mydata <- data.frame(age,gender,weight)  
+
+## From web  
+# mydata <- read.csv("http://www.ats.ucla.edu/stat/data/hdp.csv")
+
+## From text file  
+# mydata <- read.table("/Users/hai/Dropbox (DBMI)/Rtutorial/hdp.csv", header=TRUE, sep=",")  
+    
+## From Excel  
+library(xlsx)  
+# read in the worksheet named mysheet  
+mydata <- read.xlsx("/Users/hai/Dropbox (DBMI)/Rtutorial/testdata.xlsx", sheetName = "mysheet")  
+```
+
+## Data export
+
+```{r}
+# To A Tab Delimited Text File
+write.table(mydata, "/Users/hai/Dropbox (DBMI)/Rtutorial/mydata.txt", sep="\t")
+
+
+# To an Excel Spreadsheet
+library(xlsx)
+# write.xlsx(mydata, "/Users/hai/Dropbox (DBMI)/Rtutorial/mydata.xlsx")
+```
+
+
+## Viewing Data
+
+```{r}
+# list objects in the working environment
+ls()
+
+# list the variables in mydata
+names(mydata)
+
+# list the structure of mydata
+str(mydata)
+
+# print mydata 
+mydata
+
+# print first 10 rows of mydata
+head(mydata, n=10)
+
+# print last 5 rows of mydata
+tail(mydata, n=5)
+```
+
+
+## Missing Data
+
+```{r}
+# Testing for Missing Values
+x <- c(1,2,NA,3)
+is.na(x) 
+
+y <- c(1,2,3,NA)
+is.na(y) 
+
+# Excluding Missing Values from Analyses
+
+mean(x) # returns NA
+mean(x, na.rm=TRUE) # returns 2
+
+# list rows of data that have missing values 
+mydata$x <- x
+mydata$y <- y
+mydata[!complete.cases(mydata),]
+
+# create new dataset without missing data 
+newdata <- na.omit(mydata)
+```
+
+## Data Management
+
+Data Management:
+
+- Creating new variables  
+- Control Structures  
+- Sorting Data and Merging Data  
+- Subsetting Data  
+- Using with( ) and by( )  
+
+
+## Creating new variables
+
+```{r}
+# Creating new variables
+mydata$x <- c(1,2,NA,3)
+mydata$y <- c(1,2,3,NA)
+mydata$sum <- mydata$x + mydata$y
+mydata$mean <- (mydata$x + mydata$y)/2
+
+# Recoding variables
+# create 2 age categories 
+mydata$age <- c(37,49,79,59,49,90,37,49,79,59,49,90,37,49,79,59,49,90,45,23)
+mydata$agecat <- ifelse(mydata$age > 70, 
+c("older"), c("younger")) 
+```
+
+## Control Structures
+
+- if-else  
+if (cond) expr  
+if (cond) expr1 else expr2  
+
+- for  
+for (var in seq) expr  
+
+- while  
+while (cond) expr  
+
+- switch  
+switch(expr, ...)  
+
+- ifelse  
+ifelse(test,yes,no)  
+
+
+## Sorting Data and Merging Data
+
+```{r}
+# sort by mpg and cyl
+attach(mtcars)
+newdata <- mtcars[order(mtcars$mpg, mtcars$cyl),]
+
+# Adding Columns
+# merge two data frames by ID and Country
+mtcars$ID <- rownames(mtcars)
+data_frameA <- mtcars[,c(1,2,3,4,5,6,12)]
+data_frameB <- mtcars[,c(6,7,8,9,10,11,12)]
+total <- merge(data_frameA,data_frameB,by=c("ID","wt"))
+
+# Adding Rows
+data_frameA <- head(mtcars)
+data_frameB <- tail(mtcars)
+total <- rbind(data_frameA, data_frameB)
+```
+
+## Subsetting Data part 1
+```{r}
+# Selecting (Keeping) Variables
+
+#select by variable names "mpg", "cyl", "disp"
+mydata <- mtcars
+myvars <- c("mpg", "cyl", "disp")
+newdata <- mydata[myvars]
+
+# select 1st and 5th thru 10th variables
+newdata <- mydata[c(1,5:10)]
+
+# Excluding (DROPPING) Variables
+#exclude variables "mpg", "cyl", "disp"
+mydata <- mtcars
+myvars <- names(mydata) %in% c("mpg", "cyl", "disp") 
+newdata <- mydata[!myvars]
+
+# exclude 3rd and 5th variable 
+newdata <- mydata[c(-3,-5)]
+```
+
+## Subsetting Data part 1
+```{r}
+# Selecting Observations
+#first 5 observations
+newdata <- mydata[1:5,]
+
+# based on variable values
+newdata <- mydata[ which(gear== 3 & wt > 65),]
+
+# Selection using the Subset Function
+#using subset function 
+newdata <- subset(mydata, mpg >= 20 | mpg < 30, 
+select=c(ID, wt))
+```
+
+## Using with( ) and by( )
+
+- With  
+with(data, expression)  
+example applying a t-test to a data frame mydata  
+with(mydata, t.test(y ~ group))  
+
+- By  
+by(data, factorlist, function)  
+example obtain variable means separately for  
+each level of byvar in data frame mydata   
+by(mydata, mydata$byvar, function(x) mean(x))  
+
+
+## Basice Statistics
+
+Basice Statistics   
+- t-test & Correlations  
+- ANOVA   
+- Multiple Regression   
+- Regression Diagnostics   
+
+
+## t-test & Correlations
+
+- Correlations  
+```{r}
+# Correlation matrix from mtcars
+# with mpg, cyl, and disp as rows 
+# and hp, drat, and wt as columns 
+x <- mtcars[1:3]
+y <- mtcars[4:6]
+cor(x, y)
+```
+- t-tests
+```{r}
+# independent 2-group t-test
+t.test(mtcars$mpg, mtcars$wt) 
+# one sample t-test
+t.test(mtcars$mpg,mu=20) # Ho: mu=20
+```
+
+## ANOVA
+
+```{r}
+# Analysis of Covariance  
+fit <- aov(mpg ~ wt + cyl, data=mtcars)
+fit
+```
+
+## Multiple Regression
+
+```{r}
+## Fitting the Model
+
+# Multiple Linear Regression Example 
+fit <- lm(mpg ~ wt + cyl + hp, data=mtcars)
+summary(fit) # show results
+residuals(fit) # residuals
+anova(fit) # anova table 
+
+# Diagnostic Plots
+layout(matrix(c(1,2,3,4),2,2)) # optional 4 graphs/page 
+plot(fit)
+par(mfrow=c(1,1)) # back to 1 graphs/page
+
+# Comparing Models
+fit1 <- lm(mpg ~ wt + cyl + hp, data=mtcars)
+fit2 <- lm(mpg ~ wt + cyl, data=mtcars)
+anova(fit1, fit2)
+```
+
+
+## Multiple Regression (cont)
+
+```{r}
+## Variable Selection
+#Stepwise Regression
+library(MASS)
+fit <- lm(mpg ~ wt + cyl + hp, data=mtcars)
+step <- stepAIC(fit, direction="both")
+step$anova # display results
+
+# All Subsets Regression
+library(leaps)
+leaps<-regsubsets(mpg ~ wt + cyl + hp,data=mtcars,nbest=10)
+
+# view results 
+summary(leaps)
+
+# plot a table of models showing variables in each model.
+# models are ordered by the selection statistic.
+###plot(leaps,scale="r2")
+
+# plot statistic by subset size 
+library(car)
+###subsets(leaps, statistic="rsq")
+```
+
+## Regression Diagnostics
+
+```{r}
+## Assume that we are fitting a multiple linear regression
+
+library(car)
+fit <- lm(mpg~disp+hp+wt+drat, data=mtcars)
+```
+## Outliers
+```{r}
+# Assessing Outliers
+outlierTest(fit) # Bonferonni p-value for most extreme obs
+qqPlot(fit, main="QQ Plot") #qq plot for studentized resid 
+```
+## Outliers (cont)
+```{r}
+leveragePlots(fit) # leverage plots
+```
+
+## Influential Observations
+```{r}
+# added variable plots 
+###av.Plots(fit) 
+```
+
+## Cook's D plot
+```{r}
+# identify D values > 4/(n-k-1) 
+cutoff <- 4/((nrow(mtcars)-length(fit$coefficients)-2)) 
+plot(fit, which=4, cook.levels=cutoff)
+```
+## Influence Plot 
+```{r}
+influencePlot(fit,  id.method="identify", main="Influence Plot", sub="Circle size is proportial to Cook's Distance" )
+```
+
+## Non-normality
+```{r}
+# Normality of Residuals
+# qq plot for studentized resid
+qqPlot(fit, main="QQ Plot")
+```
+
+## distribution of studentized residuals
+```{r}
+library(MASS)
+sresid <- studres(fit) 
+hist(sresid, freq=FALSE, 
+   main="Distribution of Studentized Residuals")  
+xfit<-seq(min(sresid),max(sresid),length=40) 
+yfit<-dnorm(xfit) 
+lines(xfit, yfit)
+```
+
+## Non-constant Error Variance
+```{r}
+# Evaluate homoscedasticity
+# non-constant error variance test
+ncvTest(fit)
+```
+
+## plot studentized residuals vs. fitted values 
+```{r}
+spreadLevelPlot(fit)
+```
+
+## Multi-collinearity
+```{r}
+# Evaluate Collinearity
+vif(fit) # variance inflation factors 
+sqrt(vif(fit)) > 2 
+```
+
+## Nonlinearity
+```{r}
+# Evaluate Nonlinearity
+# component + residual plot 
+crPlots(fit)
+```
+
+## Ceres plots 
+```{r}
+ceresPlots(fit)
+```
+
+## Non-independence of Errors
+```{r}
+# Test for Autocorrelated Errors
+durbinWatsonTest(fit)
+```
+
+## Basic Graphs
+
+Basic Graphs:  
+- Creating a Graph  
+- Density Plots  
+- Dot Plots  
+- Bar Plots  
+- Boxplots  
+- Scatter Plots  
+
+
+## Creating a Graph
+
+```{r}
+with(mtcars, plot(wt, mpg) )
+abline(lm(mpg~wt))
+title("Regression of MPG on Weight")
+```
+
+## Density Plots
+```{r}
+hist(mtcars$mpg)
+```
+
+## Dot Plots
+```{r}
+dotchart(mtcars$mpg,labels=row.names(mtcars),cex=.7,
+    main="Gas Milage for Car Models", 
+   xlab="Miles Per Gallon")
+```
+
+## Bar Plots
+```{r}
+counts <- table(mtcars$gear)
+barplot(counts, main="Car Distribution", 
+    xlab="Number of Gears")
+```    
+    
+## Boxplots
+```{r}
+# Boxplot of MPG by Car Cylinders 
+boxplot(mpg~cyl,data=mtcars, main="Car Milage Data", 
+    xlab="Number of Cylinders", ylab="Miles Per Gallon")
+```    
+    
+## Scatter Plots
+```{r}
+plot(wt, mpg, 
+    xlab="Car Weight ", ylab="Miles Per Gallon ", pch=19)
+#Add fit lines
+abline(lm(mpg~wt), col="red") # regression line (y~x) 
+lines(lowess(wt,mpg), col="blue") # lowess line (x,y)
+```
+
+## Scatterplot Matrices
+```{r}
+pairs(~mpg+disp+drat+wt,data=mtcars)
+```
