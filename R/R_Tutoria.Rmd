@@ -211,6 +211,8 @@ mydata[!complete.cases(mydata),]
 
 # create new dataset without missing data 
 newdata <- na.omit(mydata)
+# rm(list=ls())
+
 ```
 
 ## Data Management
@@ -312,7 +314,7 @@ newdata <- mydata[ which(gear== 3 & wt > 65),]
 
 # Selection using the Subset Function
 #using subset function 
-newdata <- subset(mydata, mpg >= 20 | mpg < 30, 
+newdata <- subset(mydata, mpg >= 20 & mpg < 30, 
 select=c(ID, wt))
 ```
 
@@ -361,7 +363,7 @@ t.test(mtcars$mpg,mu=20) # Ho: mu=20
 ## ANOVA
 
 ```{r}
-# Analysis of Covariance  
+# Analysis of variance  
 fit <- aov(mpg ~ wt + cyl, data=mtcars)
 fit
 ```
