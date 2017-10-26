@@ -57,7 +57,7 @@ plot(x, y)
 ```{r}
 x = c(-10:10)
 y = x^3
-plot(x, y, pch=1, lty=1, type="b", col="blue")
+plot(x, y, pch=6, lty=3, type="b", col="red")
 ```
 
 
@@ -137,12 +137,15 @@ age <- c(25, 30, 56)
 gender <- c("male", "female", "male")  
 weight <- c(160, 110, 220)   
 mydata <- data.frame(age,gender,weight)  
+dim(mydata)
+summary(mydata)
+str(mydata)
 
 ## From web  
 # mydata <- read.csv("http://www.ats.ucla.edu/stat/data/hdp.csv")
 
 ## From text file  
-# mydata <- read.table("/Users/hai/Dropbox (DBMI)/Rtutorial/hdp.csv", header=TRUE, sep=",")  
+mydata <- read.table("mydata.txt", header=TRUE, sep="\t")  
     
 ## From Excel  
 library(xlsx)  
