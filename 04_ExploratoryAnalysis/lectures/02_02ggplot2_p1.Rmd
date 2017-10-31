@@ -17,6 +17,7 @@ widgets: mathjax
 
 ```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F}
 # make this an external chunk that can be included in any file
+library(knitr)
 options(width = 80)
 opts_chunk$set(message = F, error = F, warning = F, comment = NA, fig.align = 'center', dpi = 100, tidy = F, cache.path = '.cache/', fig.path = 'fig/', fig.height = 4, cache = TRUE, fig.show = 'hold')
 
@@ -185,9 +186,9 @@ qplot(hwy, data = mpg, facets = drv ~ ., binwidth = 2)
 - Recent publication: http://goo.gl/WqE9j8
 
 ```{r,echo=FALSE}
-eno <- read.csv("eno.csv")
-skin <- read.csv("skin.csv")
-env <- read.csv("environmental.csv")
+eno <- read.csv("data/eno.csv")
+skin <- read.csv("data/skin.csv")
+env <- read.csv("data/environmental.csv")
 m <- merge(eno, env, by = "id")
 maacs <- merge(m, skin, by = "id")
 ```

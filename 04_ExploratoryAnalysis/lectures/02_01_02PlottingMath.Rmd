@@ -1,17 +1,18 @@
 ---
-title       : Plotting - Math Functions
-subtitle    : Computing for Data Analysis
-author      : Roger Peng, Associate Professor
-job         : Johns Hopkins Bloomberg School of Public Health
-logo        : bloomberg_shield.png
-framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
-highlighter : highlight.js  # {highlight.js, prettify, highlight}
-hitheme     : tomorrow      # 
+title: "Plotting - Math Functions"
+author: "Roger Peng, Associate Professor"
+highlighter: highlight.js
+output: pdf_document
+job: Johns Hopkins Bloomberg School of Public Health
+logo: bloomberg_shield.png
+mode: selfcontained
+hitheme: tomorrow
+subtitle: Computing for Data Analysis
+framework: io2012
 url:
-  lib: ../../libraries
   assets: ../../assets
-widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
-mode        : selfcontained # {standalone, draft}
+  lib: ../../libraries
+widgets: mathjax
 ---
 
 ## Mathematical Annotation

@@ -1,4 +1,9 @@
 ---
+output:
+  pdf_document: default
+  html_document: default
+---
+---
 title       : EDA Case Study - Fine Particulate Matter Air Pollution in the United States
 subtitle    : 
 author      : Roger D. Peng, Associate Professor of Biostatistics

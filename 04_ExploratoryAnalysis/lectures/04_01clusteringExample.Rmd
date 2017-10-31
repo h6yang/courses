@@ -1,17 +1,18 @@
 ---
-title       : EDA Case Study - Understanding Human Activity with Smart Phones
-subtitle    : 
-author      : Roger D. Peng, Associate Professor of Biostatistics 
-job         : Johns Hopkins Bloomberg School of Public Health
-logo        : bloomberg_shield.png
-framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
-highlighter : highlight.js  # {highlight.js, prettify, highlight}
-hitheme     : tomorrow   # 
+title: "EDA Case Study - Understanding Human Activity with Smart Phones"
+author: "Roger D. Peng, Associate Professor of Biostatistics"
+highlighter: highlight.js
+output: pdf_document
+job: Johns Hopkins Bloomberg School of Public Health
+logo: bloomberg_shield.png
+mode: selfcontained
+hitheme: tomorrow
+subtitle: null
+framework: io2012
 url:
-  lib: ../../libraries
   assets: ../../assets
-widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
-mode        : selfcontained # {standalone, draft}
+  lib: ../../libraries
+widgets: mathjax
 ---
 
 
@@ -64,7 +65,7 @@ legend("bottomright",legend=unique(sub1$activity),col=unique(sub1$activity), pch
 
 
 ```{r dependson="processData",fig.height=5,fig.width=8}
-source("myplclust.R")
+source("data/myplclust.R")
 distanceMatrix <- dist(sub1[,1:3])
 hclustering <- hclust(distanceMatrix)
 myplclust(hclustering, lab.col = unclass(sub1$activity))
@@ -86,7 +87,7 @@ plot(sub1[,11],pch=19,col = sub1$activity,ylab=names(sub1)[11])
 ## Clustering based on maximum acceleration
 
 ```{r dependson="processData",fig.height=5,fig.width=10}
-source("myplclust.R")
+source("data/myplclust.R")
 distanceMatrix <- dist(sub1[,10:12])
 hclustering <- hclust(distanceMatrix)
 myplclust(hclustering,lab.col=unclass(sub1$activity))

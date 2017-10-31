@@ -1,17 +1,18 @@
 ---
-title       : The Lattice Plotting System in R
-subtitle    : 
-author      : Roger D. Peng, Associate Professor of Biostatistics
-job         : Johns Hopkins Bloomberg School of Public Health
-logo        : bloomberg_shield.png
-framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
-highlighter : highlight.js  # {highlight.js, prettify, highlight}
-hitheme     : tomorrow      # 
+title: "The Lattice Plotting System in R"
+author: "Roger D. Peng, Associate Professor of Biostatistics"
+highlighter: highlight.js
+output: pdf_document
+job: Johns Hopkins Bloomberg School of Public Health
+logo: bloomberg_shield.png
+mode: selfcontained
+hitheme: tomorrow
+subtitle: null
+framework: io2012
 url:
-  lib: ../../libraries
   assets: ../../assets
-widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
-mode        : selfcontained # {standalone, draft}
+  lib: ../../libraries
+widgets: mathjax
 ---
 
 ## The Lattice Plotting System
@@ -199,7 +200,7 @@ xyplot(y ~ x | f, panel = function(x, y, ...) {
 
 ```{r,echo=FALSE,cache=TRUE,fig.width=12}
 library(lattice)
-env <- readRDS("maacs_env.rds")
+env <- readRDS("data/maacs_env.rds")
 env <- transform(env, MxNum = factor(MxNum))
 xyplot(log2(airmus) ~ VisitNum | MxNum, data = env, strip = FALSE, pch = 20, xlab = "Visit Number", ylab = expression(Log[2] * " Airborne Mouse Allergen"), main = "Mouse Allergen and Asthma Cohort Study (Baltimore City)")
 ```
